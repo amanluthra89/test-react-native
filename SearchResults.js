@@ -61,23 +61,23 @@ class SearchResults extends React.Component {
 }
 
 rowPiplPressed(thumbUrl) {
-  var movie = this.props.search.filter(prop => prop.Poster === thumbUrl)[0];
+  var profile = this.props.search.filter(prop => prop.photo === thumbUrl)[0];
   this.props.navigator.push({
-    title: "Movie",
+    title: "Profile",
     component: PropertyView,
-    passProps: {movie: movie}
+    passProps: {profile: profile}
   });
 }
 
   renderRow(rowData, sectionID, rowID) {
-  var price = rowData.price_formatted.split(' ')[0];
+  //var price = rowData.price_formatted.split(' ')[0];
  
   return (
     <TouchableHighlight onPress={() => this.rowPressed(rowData.thumb_url)}
         underlayColor='#dddddd'>
       <View>
         <View style={styles.rowContainer}>
-          <Image style={styles.thumb} source={{ uri: rowData.img_url }} />
+          <Image style={styles.thumb} source={{ uri: rowData.photo }} />
           <View  style={styles.textContainer}>
             <Text style={styles.price}>£{price}</Text>
             <Text style={styles.title}
@@ -91,18 +91,18 @@ rowPiplPressed(thumbUrl) {
 }
 
 renderPiplRow(rowData, sectionID, rowID) {
-  var title = rowData.Title;
-  var year = rowData.Year 
+  var name = rowData.first_name+' '+rowData.last_name;
+  var email = rowData.email; 
   return (
-    <TouchableHighlight onPress={() => this.rowPiplPressed(rowData.Poster)}
+    <TouchableHighlight onPress={() => this.rowPiplPressed(rowData.photo)}
         underlayColor='#dddddd'>
       <View>
         <View style={styles.rowContainer}>
-          <Image style={styles.thumb} source={{ uri: rowData.Poster }} />
+          <Image style={styles.thumb} source={{ uri: rowData.photo }} />
           <View  style={styles.textContainer}>
-            <Text style={styles.price}>{title}</Text>
+            <Text style={styles.price}>{name}</Text>
             <Text style={styles.year}
-                  numberOfLines={1}>{year}</Text>
+                  numberOfLines={1}>{email}</Text>
           </View>
         </View>
         <View style={styles.separator}/>

@@ -33,7 +33,7 @@ class PropertyFinderApp extends React.Component {
                 <ReactNative.NavigatorIOS
                 style={styles.container}
                 initialRoute={{
-                title: 'Movie Finder',
+                title: 'Statisfy',
                 component: SearchPage,
                 }}/>
                 );

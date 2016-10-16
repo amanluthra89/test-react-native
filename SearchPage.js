@@ -27,6 +27,18 @@ function piplUrlForQueryAndPage(key, value, pageNumber) {
   return 'http://www.omdbapi.com/?'+querystring;
 };
 
+function idfyUrlForQueryAndPage(key, value, pageNumber) {
+  var data = {
+      r: 'json'
+  };
+  data[key] = value;
+ 
+  /*var querystring = Object.keys(data)
+    .map(key => key + '=' + encodeURIComponent(data[key]))
+    .join('&');
+  */
+  return 'https://statisfy.herokuapp.com/profiles/index?search_string='+value
+};
 
 function urlForQueryAndPage(key, value, pageNumber) {
   var data = {
@@ -130,7 +142,7 @@ _executePiplQuery(query) {
   this.setState({ isLoading: true });
   fetch(query)
   .then(response => response.json())
-  .then(json => this._handlePiplResponse(json.Search))
+  .then(json => this._handlePiplResponse(json.profiles))
   .catch(error =>
      this.setState({
       isLoading: false,
@@ -140,7 +152,7 @@ _executePiplQuery(query) {
  
 _handlePiplResponse(response) {
   if (typeof response == 'undefined') {
-  	this.setState({ isLoading: false, message: 'No movies found. Please try again.'})
+  	this.setState({ isLoading: false, message: 'No profiles found. Please try again.'})
   } else {
   this.setState({ isLoading: false , message: '' });
   	this.props.navigator.push({
@@ -168,7 +180,8 @@ onLocationPressed() {
 
 onSearchPressed() {
   //var query = urlForQueryAndPage('place_name', this.state.searchString, 1);
-  var query = piplUrlForQueryAndPage('s', this.state.searchString, 1);
+  //var query = piplUrlForQueryAndPage('s', this.state.searchString, 1);
+  var query = idfyUrlForQueryAndPage('s', this.state.searchString, 1);
   //this._executeQuery(query);
   this._executePiplQuery(query);
 }
@@ -176,7 +189,7 @@ onSearchPressed() {
   constructor(props) {
   super(props);
   this.state = {
-    searchString: 'Star Wars',
+    searchString: '',
     isLoading: false,
     message: ''
   };
@@ -194,14 +207,14 @@ onSearchPressed() {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>
-          Movie search test app!
+          Job Satisfaction with Stats!
         </Text>
         <View style={styles.flowRight}>
 		  <TextInput
   			style={styles.searchInput}
   			value={this.state.searchString}
   			onChange={this.onSearchTextChanged.bind(this)}
-  			placeholder='Search via movie name'/>
+  			placeholder='Search via name or email'/>
 		  <TouchableHighlight style={styles.button}
 	        underlayColor='#99d9f4'
 	        onPress={this.onSearchPressed.bind(this)} >
@@ -213,7 +226,7 @@ onSearchPressed() {
 		  onPress={this.onLocationPressed.bind(this)} >
 		  <Text style={styles.buttonText}>Location</Text>
 		</TouchableHighlight>
-		<Image source={require('./Resources/Movies.jpg')} style={styles.image}/>
+		<Image source={require('./Resources/IDfy_invoices_logo.png')} style={styles.image}/>
 		{spinner}
 		<Text style={styles.description}>{this.state.message}</Text>
       </View>

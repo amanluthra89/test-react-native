@@ -45,30 +45,31 @@ var styles = StyleSheet.create({
 class PropertyView extends React.Component {
  
   render() {
-    var movie = this.props.movie;
+    var profile = this.props.profile;
+    var name = profile.first_name+' '+profile.last_name
     /*var stats = property.bedroom_number + ' bed ' + property.property_type;
     if (property.bathroom_number) {
       stats += ', ' + property.bathroom_number + ' ' + (property.bathroom_number > 1
         ? 'bathrooms' : 'bathroom');
     }*/
-    var imdb_link = 'www.imdb.com/title/'+movie.imdbID
-    var type = 'Type: '+movie.Type
+    //var imdb_link = 'www.imdb.com/title/'+movie.imdbID
+    //var type = 'Type: '+movie.Type
     //var price = property.price_formatted.split(' ')[0];
  
     return (
       <View style={styles.container}>
         <Image style={styles.image}
-            source={{uri: movie.Poster}} />
+            source={{uri: profile.photo}} />
         <View style={styles.heading}>
-          <Text style={styles.price}>{movie.Title}</Text>
-          <Text style={styles.title}>{movie.Year}</Text>
+          <Text style={styles.price}>{name}</Text>
+          <Text style={styles.title}>{profile.email}</Text>
           <View style={styles.separator}/>
         </View>
-        <Text style={styles.description}>{type}</Text>
-        <Text style={styles.description}>{imdb_link}</Text>
       </View>
     );
   }
 }
+
+
 
 module.exports = PropertyView;
